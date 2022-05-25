@@ -30,25 +30,43 @@ Clock.prototype.setFormat = function (format = 'full') {
 }
 
 // Short Clock
-function shortClock(clockNode, fullFormat) {
+function ShortClock(clockNode, fullFormat) {
     Clock.call(this, clockNode, fullFormat);
 }
 
-shortClock.prototype = Object.create(Clock.prototype);
-shortClock.prototype.constructor = shortClock;
+ShortClock.prototype = Object.create(Clock.prototype);
+ShortClock.prototype.constructor = ShortClock;
+ShortClock.prototype.render = function () {
+    let time = new Date().toTimeString().split(' ')[0];
+
+    if (!this.formatFull) {
+        time = new Date().toTimeString().split(' ')[0].substring(0,5);
+    }
+
+    this.clockNode.innerHTML = time;
+}
 
 // Full Clock
-function fullClock(clockNode, fullFormat) {
+function FullClock(clockNode, fullFormat) {
     Clock.call(this, clockNode, fullFormat);
 }
 
-fullClock.prototype = Object.create(Clock.prototype);
-fullClock.prototype.constructor = fullClock;
+FullClock.prototype = Object.create(Clock.prototype);
+FullClock.prototype.constructor = FullClock;
+FullClock.prototype.render = function () {
+    let time = new Date().toTimeString().split(' ')[0];
+
+    if (!this.formatFull) {
+        time = new Date().toTimeString().split(' ')[0].substring(0,5);
+    }
+
+    this.clockNode.innerHTML = time;
+}
 
 const clock = new Clock(document.querySelector('#clock'));
-const clockShort = new shortClock(document.querySelector('#shortClock'), false);
-const clockFull = new fullClock(document.querySelector('#fullClock'))
+const shortClock = new ShortClock(document.querySelector('#shortClock'), false);
+const fullClock = new FullClock(document.querySelector('#fullClock'));
 
 clock.start();
-clockShort.start();
-clockFull.start();
+shortClock.start();
+fullClock.start();
